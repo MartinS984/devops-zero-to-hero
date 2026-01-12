@@ -1,6 +1,6 @@
 # 🚀 DevOps Zero to Hero: The Ultimate Lab
 
-**Status:** 🚧 In Progress (Chapters 1-6 Complete)  
+**Status:** ✅ Completed
 **Author:** [Your Name]
 
 A complete, "full-stack" DevOps journey building a three-tier application (React, Node.js, PostgreSQL) from source code to a fully automated GitOps deployment.
@@ -20,6 +20,7 @@ The infrastructure evolves through the following stages:
 3. **Templating:** Helm Charts
 4. **GitOps:** ArgoCD (Automated Sync)
 5. **CI/CD:** GitHub Actions (Automated Testing)
+6. **Observability:** Prometheus & Grafana (Monitoring)
 
 ---
 
@@ -31,6 +32,7 @@ The infrastructure evolves through the following stages:
 * **Package Management:** Helm
 * **GitOps:** ArgoCD
 * **CI/CD:** GitHub Actions
+* **Observability:** Prometheus, Grafana
 * **OS:** Ubuntu (WSL2), Alpine Linux
 
 ---
@@ -100,6 +102,24 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 kubectl apply -f argocd/application.yaml
 ```
 
+### Method 4: The "SRE" Way (Monitoring)
+
+View the health of the cluster.
+
+```bash
+# 1. Install Prometheus Stack
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+
+# 2. Get Grafana Password
+kubectl get secret --namespace monitoring monitoring-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+# 3. Access Dashboard
+kubectl port-forward svc/monitoring-grafana 3000:80 -n monitoring
+# -> Open http://localhost:3000 (User: admin)
+```
+
 ## 🗺️ Project Roadmap
 
 | Chapter | Topic                                            | Status   |
@@ -109,8 +129,8 @@ kubectl apply -f argocd/application.yaml
 | 03      | Orchestration (Raw Kubernetes Manifests)         | ✅ Done  |
 | 04      | Package Management (Helm Charts)                 | ✅ Done  |
 | 05      | GitOps (ArgoCD & Sync Automation)                | ✅ Done  |
-| 06      | CI Pipeline (GitHub Actions)                     | ✅ Done   |
-| 07      | Observability (Prometheus & Grafana)             | ⏳ Pending|
+| 06      | CI Pipeline (GitHub Actions)                     | ✅ Done  |
+| 07      | Observability (Prometheus & Grafana)             | ✅ Done  |
 
 ## 📂 Repository Structure
 
