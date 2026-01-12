@@ -1,0 +1,69 @@
+name: CI Pipeline
+
+# Trigger on push to main or Pull Requests
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - '**.md' # Don't run on README changes
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # 1. Test the Node.js Backend
+  backend-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          
+      - name: Install Dependencies
+        run: npm ci
+        
+      # (Optional) We could run 'npm test' here if we had tests
+      - name: Verify Server Starts (Syntax Check)
+        run: node -c index.js
+
+  # 2. Test the React Frontend
+  frontend-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          
+      - name: Install Dependencies
+        run: npm ci
+        
+      - name: Build React App
+        # This catches errors like "Component not found"
+        run: npm run build
+
+  # 3. Test Docker Builds (Dry Run)
+  docker-build-check:
+    runs-on: ubuntu-latest
+    needs: [backend-test, frontend-test] # Only run if tests pass
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Build Backend Image
+        run: docker build ./backend -t test-backend
+        
+      - name: Build Frontend Image
+        run: docker build ./frontend -t test-frontend
