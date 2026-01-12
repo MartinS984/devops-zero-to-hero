@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zero-to-hero-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # 1. Point to your GitHub Repo
+    repoURL: https://github.com/MartinS984/devops-zero-to-hero.git
+    targetRevision: main
+    path: helm-charts/three-tier-app  # Where our Chart is
+  destination:
+    # 2. Deploy inside the same cluster
+    server: https://kubernetes.default.svc
+    namespace: default
+  # 3. Automation Policy
+  syncPolicy:
+    automated:
+      prune: true      # Delete stuff in K8s if I delete it in Git
+      selfHeal: true   # Fix stuff in K8s if someone manually hacks it
+    syncOptions:
+      - CreateNamespace=true
