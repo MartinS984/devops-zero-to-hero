@@ -78,22 +78,42 @@ helm install my-app ./helm-charts/three-tier-app
 minikube tunnel
 # -> Open http://127.0.0.1
 ```
+### Method 3: The "GitOps Master" Way (ArgoCD)
+
+Automates the deployment. ArgoCD watches this repo and syncs changes automatically.
+
+```bash
+# 1. Install ArgoCD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# 2. Get Admin Password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+# 3. Access UI (Keep terminal open)
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+# -> Open https://localhost:8080 (User: admin)
+
+# 4. Connect the App
+kubectl apply -f argocd/application.yaml
+```
 
 ## 🗺️ Project Roadmap
 
-| Chapter | Topic | Status |
-|---------|-------|--------|
-| 01 | Source Code (React/Node/Postgres setup) | ✅ Done |
-| 02 | Containerization (Dockerfiles & Compose) | ✅ Done |
-| 03 | Orchestration (Raw Kubernetes Manifests) | ✅ Done |
-| 04 | Package Management (Helm Charts) | ✅ Done |
-| 05 | GitOps (ArgoCD & Sync Automation) | ⏳ Next |
-| 06 | CI Pipeline (GitHub Actions) | ⏳ Pending |
-| 07 | Observability (Prometheus & Grafana) | ⏳ Pending |
+| Chapter | Topic                                            | Status   |
+|---------|--------------------------------------------------|----------|
+| 01      | Source Code (React/Node/Postgres setup)          | ✅ Done  |
+| 02      | Containerization (Dockerfiles & Compose)         | ✅ Done  |
+| 03      | Orchestration (Raw Kubernetes Manifests)         | ✅ Done  |
+| 04      | Package Management (Helm Charts)                 | ✅ Done  |
+| 05      | GitOps (ArgoCD & Sync Automation)                | ✅ Done  |
+| 06      | CI Pipeline (GitHub Actions)                     | ⏳ Next   |
+| 07      | Observability (Prometheus & Grafana)             | ⏳ Pending|
 
 ## 📂 Repository Structure
 
 ```
+├── argocd/         # ArgoCD Application Manifests
 ├── backend/        # Express API + Dockerfile
 ├── frontend/       # React App + Nginx Dockerfile
 ├── database/       # SQL Initialization scripts
