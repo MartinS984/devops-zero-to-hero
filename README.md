@@ -56,19 +56,27 @@ docker compose up -d --build
 Deploys the application into a local cluster using production-grade templates.
 
 # 1. Start Minikube & Connect Docker
+```bash
 minikube start
 eval $(minikube docker-env) # (Or Windows equivalent)
+```
 
 # 2. Build Images (Inside Cluster)
+```bash
 docker build -t devops-backend:v1 ./backend
 docker build -t devops-frontend:v1 ./frontend
+```
 
 # 3. Deploy with Helm
+```bash
 helm install my-app ./helm-charts/three-tier-app
+```
 
 # 4. Access via Tunnel (for LoadBalancer)
+```bash
 minikube tunnel
-# -> Open [http://127.0.0.1](http://127.0.0.1)
+# -> Open http://127.0.0.1
+```
 
 ## 🗺️ Project Roadmap
 
