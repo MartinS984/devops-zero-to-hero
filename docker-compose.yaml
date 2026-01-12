@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # 1. The Database
+  db:
+    image: postgres:15-alpine
+    container_name: devops-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todos
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      # Automatically run our init.sql when the DB starts for the first time
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  # 2. The API
+  backend:
+    build: ./backend
+    container_name: devops-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      # 'db' here refers to the service name above (Docker DNS magic)
+      DATABASE_URL: postgres://postgres:password@db:5432/todos
+      PORT: 5000
+    depends_on:
+      - db
+
+  # 3. The UI
+  frontend:
+    build: ./frontend
+    container_name: devops-frontend
+    restart: always
+    ports:
+      - "3000:80" # Map host port 3000 to container port 80 (Nginx)
+    depends_on:
+      - backend
+
+# Define persistent storage for the DB so data survives restarts
+volumes:
+  db-data:
