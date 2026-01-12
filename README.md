@@ -1,6 +1,6 @@
 # 🚀 DevOps Zero to Hero: The Ultimate Lab
 
-**Status:** 🚧 In Progress (Chapters 1-4 Complete)  
+**Status:** 🚧 In Progress (Chapters 1-6 Complete)  
 **Author:** [Your Name]
 
 A complete, "full-stack" DevOps journey building a three-tier application (React, Node.js, PostgreSQL) from source code to a fully automated GitOps deployment.
@@ -18,7 +18,8 @@ The infrastructure evolves through the following stages:
 1. **Local Dev:** Docker Compose
 2. **Orchestration:** Kubernetes (Minikube)
 3. **Templating:** Helm Charts
-4. **GitOps:** ArgoCD (Coming Soon)
+4. **GitOps:** ArgoCD (Automated Sync)
+5. **CI/CD:** GitHub Actions (Automated Testing)
 
 ---
 
@@ -28,6 +29,8 @@ The infrastructure evolves through the following stages:
 * **Containerization:** Docker, Multi-stage builds
 * **Orchestration:** Kubernetes (Minikube), Docker Compose
 * **Package Management:** Helm
+* **GitOps:** ArgoCD
+* **CI/CD:** GitHub Actions
 * **OS:** Ubuntu (WSL2), Alpine Linux
 
 ---
@@ -40,7 +43,6 @@ The infrastructure evolves through the following stages:
 * Helm
 
 ### Method 1: The "Local Developer" Way (Docker Compose)
-
 Ideal for testing code changes instantly without Kubernetes.
 
 ```bash
@@ -107,12 +109,13 @@ kubectl apply -f argocd/application.yaml
 | 03      | Orchestration (Raw Kubernetes Manifests)         | ✅ Done  |
 | 04      | Package Management (Helm Charts)                 | ✅ Done  |
 | 05      | GitOps (ArgoCD & Sync Automation)                | ✅ Done  |
-| 06      | CI Pipeline (GitHub Actions)                     | ⏳ Next   |
+| 06      | CI Pipeline (GitHub Actions)                     | ✅ Done   |
 | 07      | Observability (Prometheus & Grafana)             | ⏳ Pending|
 
 ## 📂 Repository Structure
 
 ```
+├── .github/        # CI Pipelines (GitHub Actions)
 ├── argocd/         # ArgoCD Application Manifests
 ├── backend/        # Express API + Dockerfile
 ├── frontend/       # React App + Nginx Dockerfile
