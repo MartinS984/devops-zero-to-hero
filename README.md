@@ -1,6 +1,6 @@
 # 🚀 DevOps Zero to Hero: The Ultimate Lab
 
-**Status:** 🚧 In Progress (Chapters 1-4 Complete)
+**Status:** 🚧 In Progress (Chapters 1-4 Complete)  
 **Author:** [Your Name]
 
 A complete, "full-stack" DevOps journey building a three-tier application (React, Node.js, PostgreSQL) from source code to a fully automated GitOps deployment.
@@ -8,20 +8,22 @@ A complete, "full-stack" DevOps journey building a three-tier application (React
 ---
 
 ## 🏗️ Architecture
+
 This project implements a standard **Microservices Architecture**:
 * **Frontend:** React (Vite) - Served via Nginx
 * **Backend:** Node.js (Express) API
 * **Database:** PostgreSQL (v15)
 
 The infrastructure evolves through the following stages:
-1.  **Local Dev:** Docker Compose
-2.  **Orchestration:** Kubernetes (Minikube)
-3.  **Templating:** Helm Charts
-4.  **GitOps:** ArgoCD (Coming Soon)
+1. **Local Dev:** Docker Compose
+2. **Orchestration:** Kubernetes (Minikube)
+3. **Templating:** Helm Charts
+4. **GitOps:** ArgoCD (Coming Soon)
 
 ---
 
 ## 🛠️ Tech Stack
+
 * **Code:** JavaScript (React, Node.js), SQL
 * **Containerization:** Docker, Multi-stage builds
 * **Orchestration:** Kubernetes (Minikube), Docker Compose
@@ -48,8 +50,9 @@ docker compose up -d --build
 # Frontend: http://localhost:3000
 # Backend:  http://localhost:5000
 # Database: Port 5432
+```
 
-Method 2: The "DevOps Engineer" Way (Kubernetes + Helm)
+### Method 2: The "DevOps Engineer" Way (Kubernetes + Helm)
 Deploys the application into a local cluster using production-grade templates.
 
 # 1. Start Minikube & Connect Docker
@@ -67,12 +70,25 @@ helm install my-app ./helm-charts/three-tier-app
 minikube tunnel
 # -> Open [http://127.0.0.1](http://127.0.0.1)
 
-🗺️ Project RoadmapChapterTopicStatus01Source Code (React/Node/Postgres setup)✅ Done02Containerization (Dockerfiles & Compose)✅ Done03Orchestration (Raw Kubernetes Manifests)✅ Done04Package Management (Helm Charts)✅ Done05GitOps (ArgoCD & Sync Automation)⏳ Next06CI Pipeline (GitHub Actions)⏳ Pending07Observability (Prometheus & Grafana)⏳ Pending
+## 🗺️ Project Roadmap
 
-📂 Repository Structure
+| Chapter | Topic | Status |
+|---------|-------|--------|
+| 01 | Source Code (React/Node/Postgres setup) | ✅ Done |
+| 02 | Containerization (Dockerfiles & Compose) | ✅ Done |
+| 03 | Orchestration (Raw Kubernetes Manifests) | ✅ Done |
+| 04 | Package Management (Helm Charts) | ✅ Done |
+| 05 | GitOps (ArgoCD & Sync Automation) | ⏳ Next |
+| 06 | CI Pipeline (GitHub Actions) | ⏳ Pending |
+| 07 | Observability (Prometheus & Grafana) | ⏳ Pending |
+
+## 📂 Repository Structure
+
+```
 ├── backend/        # Express API + Dockerfile
 ├── frontend/       # React App + Nginx Dockerfile
 ├── database/       # SQL Initialization scripts
 ├── helm-charts/    # Kubernetes Helm Templates
 ├── k8s/            # (Legacy) Raw Manifests for reference
 └── docker-compose.yaml
+```
