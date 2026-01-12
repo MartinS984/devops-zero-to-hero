@@ -40,6 +40,7 @@ The infrastructure evolves through the following stages:
 * Helm
 
 ### Method 1: The "Local Developer" Way (Docker Compose)
+
 Ideal for testing code changes instantly without Kubernetes.
 
 ```bash
