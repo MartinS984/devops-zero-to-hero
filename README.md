@@ -48,3 +48,31 @@ docker compose up -d --build
 # Frontend: http://localhost:3000
 # Backend:  http://localhost:5000
 # Database: Port 5432
+
+Method 2: The "DevOps Engineer" Way (Kubernetes + Helm)
+Deploys the application into a local cluster using production-grade templates.
+
+# 1. Start Minikube & Connect Docker
+minikube start
+eval $(minikube docker-env) # (Or Windows equivalent)
+
+# 2. Build Images (Inside Cluster)
+docker build -t devops-backend:v1 ./backend
+docker build -t devops-frontend:v1 ./frontend
+
+# 3. Deploy with Helm
+helm install my-app ./helm-charts/three-tier-app
+
+# 4. Access via Tunnel (for LoadBalancer)
+minikube tunnel
+# -> Open [http://127.0.0.1](http://127.0.0.1)
+
+🗺️ Project RoadmapChapterTopicStatus01Source Code (React/Node/Postgres setup)✅ Done02Containerization (Dockerfiles & Compose)✅ Done03Orchestration (Raw Kubernetes Manifests)✅ Done04Package Management (Helm Charts)✅ Done05GitOps (ArgoCD & Sync Automation)⏳ Next06CI Pipeline (GitHub Actions)⏳ Pending07Observability (Prometheus & Grafana)⏳ Pending
+
+📂 Repository Structure
+├── backend/        # Express API + Dockerfile
+├── frontend/       # React App + Nginx Dockerfile
+├── database/       # SQL Initialization scripts
+├── helm-charts/    # Kubernetes Helm Templates
+├── k8s/            # (Legacy) Raw Manifests for reference
+└── docker-compose.yaml
