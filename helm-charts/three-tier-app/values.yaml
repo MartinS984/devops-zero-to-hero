@@ -1,0 +1,13 @@
+# Backend Configuration
+backend:
+  replicas: 1
+  image:
+    repository: devops-backend
+    tag: v1
+
+# Frontend Configuration
+frontend:
+  replicas: 1
+  image:
+    repository: devops-frontend
+    tag: v1
